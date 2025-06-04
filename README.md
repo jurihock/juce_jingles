@@ -12,13 +12,11 @@ CPMAddPackage(
   GIT_TAG main
   GITHUB_REPOSITORY jurihock/juce_jingles
   DOWNLOAD_ONLY YES
-  SOURCE_DIR "${CMAKE_SOURCE_DIR}/modules/juce_jingles")
-```
+  SOURCE_DIR "${CPM_SOURCE_CACHE}/juce_jingles")
 
-## CMake (`modules\CMakeLists.txt`)
-
-```
-juce_add_module(juce_jingles)
+if(juce_jingles_ADDED)
+  juce_add_module("${juce_jingles_SOURCE_DIR}")
+endif()
 ```
 
 ## CMake (`CMakeLists.txt`)
@@ -62,10 +60,4 @@ target_compile_features(${PROJECT_NAME}
 #include <JuceHeader.h>
 
 HELLO_JUCE_JINGLES
-```
-
-## .gitignore
-
-```
-modules/juce_jingles/
 ```
