@@ -7,22 +7,24 @@
   #include <juce_core/juce_core.h>
 
   template<typename... Args>
-  static inline void juce_jingles_log(const juce::String& log, const juce::String& str, Args&&... args)
+  static inline void juce_jingles_log(juce::String str, Args&&... args)
   {
     static std::unique_ptr<juce::FileLogger> logger =
       std::unique_ptr<juce::FileLogger>(
         juce::FileLogger::createDefaultAppLogger(
-          log, log + ".log", ""));
+          JUCE_JINGLES_PROJECT,
+          JUCE_JINGLES_PROJECT + juce::String(".log"),
+          ""));
 
     const juce::String message = juce::String::formatted(
-      str, std::forward<Args>(args)...);
+      std::move(str), std::forward<Args>(args)...);
 
     logger->logMessage(message);
   }
 
   END_JUCE_JINGLES_NAMESPACE
 
-  #define LOG(...) do { JUCE_JINGLES_NAMESPACE::juce_jingles_log(JUCE_JINGLES_PROJECT, __VA_ARGS__); } while (false)
+  #define LOG(...) do { JUCE_JINGLES_NAMESPACE::juce_jingles_log(__VA_ARGS__); } while (false)
 
 #else
 
