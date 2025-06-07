@@ -221,7 +221,7 @@ public:
           audio.getWritePointer(j),
           static_cast<size_t>(channel_samples));
 
-        if (bypass.value_or(parameters.bypass()))
+        if (bypass.value_or(parameters.template get<bool>("bypass")))
         {
           effects.at(j)->dry(input, output);
         }
